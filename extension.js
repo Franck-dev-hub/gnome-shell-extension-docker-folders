@@ -33,14 +33,14 @@ const TERMINALS = [
 ];
 const EXEC_SHELL = 'command -v bash >/dev/null && exec bash || exec sh';
 // A stopped container's logs end at once: wait for a key so the window stays open.
-const LOGS_SCRIPT = 'docker logs --tail 200 $2 "$1"; printf "\\n[Entrée pour fermer]"; read -r _';
+const LOGS_SCRIPT = 'docker logs --tail 200 $2 "$1"; printf "\\n[Press Enter to close]"; read -r _';
 
 const ACTIONS = {
-    start: {icon: 'media-playback-start-symbolic', style: 'play', label: 'Lancer'},
-    pause: {icon: 'media-playback-pause-symbolic', style: 'pause', label: 'Mettre en pause'},
-    stop: {icon: 'media-playback-stop-symbolic', style: 'stop', label: 'Arrêter'},
-    restart: {file: 'restart', style: 'restart', label: 'Redémarrer'},
-    exec: {file: 'terminal', style: 'exec', label: 'Ouvrir un terminal'},
+    start: {icon: 'media-playback-start-symbolic', style: 'play', label: 'Start'},
+    pause: {icon: 'media-playback-pause-symbolic', style: 'pause', label: 'Pause'},
+    stop: {icon: 'media-playback-stop-symbolic', style: 'stop', label: 'Stop'},
+    restart: {file: 'restart', style: 'restart', label: 'Restart'},
+    exec: {file: 'terminal', style: 'exec', label: 'Open a shell'},
     logs: {file: 'logs', style: 'logs', label: 'Logs'},
 };
 const ICON_FILES = ['docker', 'compose', 'restart', 'terminal', 'logs'];
@@ -63,7 +63,7 @@ function runDocker(args, cancellable) {
                 if (p.get_successful())
                     resolve(stdout);
                 else
-                    reject(new Error(stderr.trim() || `docker ${args[0]} a échoué`));
+                    reject(new Error(stderr.trim() || `docker ${args[0]} failed`));
             } catch (e) {
                 reject(e);
             }
@@ -90,7 +90,7 @@ function parseContainers(output) {
 
 function folderName(dir) {
     if (!dir)
-        return 'Autres';
+        return 'Others';
     const parts = dir.split('/').filter(Boolean);
     const last = parts.at(-1);
     return COMPOSE_SUBDIRS.has(last) && parts.length > 1 ? parts.at(-2) : last;
@@ -115,7 +115,7 @@ function openInTerminal(args) {
             return;
         }
     }
-    Main.notifyError('Docker Folders', 'Aucun terminal trouvé');
+    Main.notifyError('Docker Folders', 'No terminal found');
 }
 
 function infoItem(text) {
@@ -276,7 +276,7 @@ class DockerFoldersIndicator extends PanelMenu.Button {
         this._rebuilding = false;
 
         if (this._error) {
-            this._section.addMenuItem(infoItem(`Docker indisponible : ${this._error}`));
+            this._section.addMenuItem(infoItem(`Docker unavailable: ${this._error}`));
             return;
         }
 
@@ -299,7 +299,7 @@ class DockerFoldersIndicator extends PanelMenu.Button {
             .sort((a, b) => (a.dir === '') - (b.dir === '') || a.name.localeCompare(b.name));
 
         if (folders.length === 0) {
-            this._section.addMenuItem(infoItem(wantRunning ? 'Aucun dossier lancé' : 'Aucun dossier arrêté'));
+            this._section.addMenuItem(infoItem(wantRunning ? 'No running folder' : 'No stopped folder'));
             return;
         }
 

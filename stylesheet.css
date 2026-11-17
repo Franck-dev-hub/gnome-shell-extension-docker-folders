@@ -38,9 +38,6 @@
   background-color: rgba(127, 127, 127, 0.25);
 }
 
-.docker-folders-action:insensitive {
-  opacity: 0.3;
-}
 
 /* Same saturation and lightness as #667eea, only the hue changes. */
 .docker-folders-green,
@@ -68,4 +65,9 @@
 
 .docker-folders-logs {
   color: #66d4ea;
+}
+
+/* St ignores opacity, so disabled actions are greyed by colour. */
+.docker-folders-action:insensitive {
+  color: rgba(127, 127, 127, 0.45);
 }
