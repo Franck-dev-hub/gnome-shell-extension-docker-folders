@@ -13,8 +13,8 @@ Requires GNOME Shell 50 and the `docker` CLI usable without sudo.
 ## Install from source
 
 ```bash
-git clone https://github.com/Franck-dev-hub/docker-folders.git
-ln -s "$PWD/docker-folders" ~/.local/share/gnome-shell/extensions/docker-folders@franck-dev-hub.github.io
+git clone https://github.com/Franck-dev-hub/gnome-shell-extension-docker-folders.git
+ln -s "$PWD/gnome-shell-extension-docker-folders" ~/.local/share/gnome-shell/extensions/docker-folders@franck-dev-hub.github.io
 ```
 
 Log out and back in, then `gnome-extensions enable docker-folders@franck-dev-hub.github.io`.
