@@ -158,10 +158,10 @@ class DockerFoldersIndicator extends PanelMenu.Button {
         this._section = new PopupMenu.PopupMenuSection();
         this.menu.addMenuItem(this._section);
 
-        this.menu.connect('open-state-changed', (_menu, open) => {
+        this.menu.connectObject('open-state-changed', (_menu, open) => {
             if (open)
                 this._refresh();
-        });
+        }, this);
 
         this._refresh();
         this._watchEvents();
@@ -326,7 +326,7 @@ class DockerFoldersIndicator extends PanelMenu.Button {
         for (const container of containers)
             item.menu.addMenuItem(this._containerItem(container));
 
-        item.menu.connect('open-state-changed', (_menu, open) => {
+        item.menu.connectObject('open-state-changed', (_menu, open) => {
             // Closing the panel menu also closes submenus: keep what the user expanded.
             if (this._rebuilding || !this.menu.isOpen)
                 return;
@@ -334,7 +334,7 @@ class DockerFoldersIndicator extends PanelMenu.Button {
                 this._expanded.add(dir);
             else
                 this._expanded.delete(dir);
-        });
+        }, this);
 
         this._section.addMenuItem(item);
         if (this._expanded.has(dir))
@@ -424,10 +424,10 @@ class DockerFoldersIndicator extends PanelMenu.Button {
     destroy() {
         this._cancellable.cancel();
         this._eventsProc?.force_exit();
-        for (const id of [this._refreshTimeoutId, this._retryTimeoutId]) {
-            if (id)
-                GLib.source_remove(id);
-        }
+        if (this._refreshTimeoutId)
+            GLib.Source.remove(this._refreshTimeoutId);
+        if (this._retryTimeoutId)
+            GLib.Source.remove(this._retryTimeoutId);
         super.destroy();
     }
 });
