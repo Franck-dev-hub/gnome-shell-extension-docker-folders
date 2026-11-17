@@ -1,0 +1,8 @@
+{
+  "uuid": "docker-folders@franck-dev-hub.github.io",
+  "name": "Docker Folders",
+  "description": "Running and stopped Docker containers, grouped by compose folder.",
+  "shell-version": ["50"],
+  "url": "https://github.com/Franck-dev-hub/docker-folders",
+  "version": 1
+}

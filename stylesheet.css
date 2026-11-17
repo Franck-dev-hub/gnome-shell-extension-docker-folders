@@ -1,0 +1,71 @@
+.docker-folders-menu {
+  min-width: 22em;
+}
+
+.docker-folders-count {
+  font-weight: bold;
+}
+
+.docker-folders-tabs {
+  spacing: 6px;
+}
+
+.docker-folders-tab {
+  padding: 6px 12px;
+  border-radius: 99px;
+  font-weight: bold;
+}
+
+.docker-folders-tab:hover {
+  background-color: rgba(127, 127, 127, 0.2);
+}
+
+.docker-folders-tab:checked {
+  background-color: -st-accent-color;
+  color: -st-accent-fg-color;
+}
+
+.docker-folders-actions {
+  spacing: 2px;
+}
+
+.docker-folders-action {
+  padding: 4px;
+  border-radius: 99px;
+}
+
+.docker-folders-action:hover {
+  background-color: rgba(127, 127, 127, 0.25);
+}
+
+.docker-folders-action:insensitive {
+  opacity: 0.3;
+}
+
+/* Same saturation and lightness as #667eea, only the hue changes. */
+.docker-folders-green,
+.docker-folders-play {
+  color: #66eaa8;
+}
+
+.docker-folders-yellow,
+.docker-folders-pause {
+  color: #eac966;
+}
+
+.docker-folders-red,
+.docker-folders-stop {
+  color: #ea6671;
+}
+
+.docker-folders-restart {
+  color: #667eea;
+}
+
+.docker-folders-exec {
+  color: #a866ea;
+}
+
+.docker-folders-logs {
+  color: #66d4ea;
+}
